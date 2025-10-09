@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 
 const app = express();
 
@@ -32,6 +33,7 @@ let notes = [
 
 app.use(express.json());
 app.use(morgan(customFormat));
+app.use(cors());
 
 app.get('/', (request, response) => {
     response.send('<h1>Hello World!</h1>');
