@@ -24,6 +24,7 @@ const App = () => {
     
     console.log('render', notes.length, 'notes');
     
+    
     const notesToShow = showAll ? notes : notes.filter(note => note.important);
     
     const addNote = (event) => {
@@ -75,7 +76,7 @@ const App = () => {
                 </button>
             </div>
             <ul>
-                {notesToShow.map(note => 
+                { notesToShow && notesToShow.map(note => 
                     <Note key={note.id} note={note} toggleImportance={() => toggleImportanceOf(note.id)} />
                 )}
             </ul>
