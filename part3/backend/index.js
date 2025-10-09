@@ -31,6 +31,7 @@ let notes = [
   }
 ];
 
+app.use(express.static('dist'));
 app.use(express.json());
 app.use(morgan(customFormat));
 app.use(cors());
