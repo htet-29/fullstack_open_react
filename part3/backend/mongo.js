@@ -7,7 +7,7 @@ if (process.argv.length < 3) {
 
 const password = encodeURIComponent(process.argv[2]); // because of special sign in password
 
-const url = `mongodb+srv://htethlaingwin:${password}@cluster0.d2lojpy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+const url = `mongodb+srv://htethlaingwin:${password}@cluster0.d2lojpy.mongodb.net/noteApp?retryWrites=true&w=majority&appName=Cluster0`;
 
 mongoose.set('strictQuery', false);
 
