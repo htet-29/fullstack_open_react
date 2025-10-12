@@ -1,8 +1,14 @@
 const express = require('express');
 const morgan = require('morgan');
+const mongoose = require('mongoose');
 
 const app = express();
 
+// For Database
+const password = encodeURIComponent(process.argv[2]);
+const url = `mongodb+srv://htethlaingwin:${password}@cluster0.d2lojpy.mongodb.net/noteApp?retryWrites=true&w=majority&appName=Cluster0`
+
+// Customize logger
 morgan.token('body', (req, res) => {
   if (req.body && Object.keys(req.body).length > 0) {
     return JSON.stringify(req.body);
@@ -12,34 +18,33 @@ morgan.token('body', (req, res) => {
 
 const customFormat = ':method :url :status :res[content-length] - :response-time ms :body';
 
-let notes = [
-  {
-    id: "1",
-    content: "HTML is easy!",
-    important: true
-  },
-  {
-    id: "2",
-    content: "Browser can execute only JavaScript",
-    important: false
-  },
-  {
-    id: "3",
-    content: "GET and POST are the most important methods of HTTP protocol",
-    important: true
-  }
-];
-
+// Express Setup
 app.use(express.static('dist'));
 app.use(express.json());
+
+// Logger Setup
 app.use(morgan(customFormat));
 
+// Database Setup
+mongoose.set('strictQuery', false);
+mongoose.connect(url);
+
+const noteSchema = new mongoose.Schema({
+  content: String,
+  important: Boolean,
+});
+
+const Note = mongoose.model('Note', noteSchema);
+
+// All API Endpoints
 app.get('/', (request, response) => {
     response.send('<h1>Hello World!</h1>');
 });
 
 app.get('/api/notes', (request, response) => {
-    response.json(notes);
+    Note.find({}).then(notes => {
+      response.json(notes);
+    })
 });
 
 app.get('/api/notes/:id', (request, response) => {
