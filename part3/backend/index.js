@@ -1,12 +1,9 @@
+require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
-const mongoose = require('mongoose');
+const Note = require('./models/note');
 
 const app = express();
-
-// For Database
-const password = encodeURIComponent(process.argv[2]);
-const url = `mongodb+srv://htethlaingwin:${password}@cluster0.d2lojpy.mongodb.net/noteApp?retryWrites=true&w=majority&appName=Cluster0`
 
 // Customize logger
 morgan.token('body', (req, res) => {
@@ -25,24 +22,6 @@ app.use(express.json());
 // Logger Setup
 app.use(morgan(customFormat));
 
-// Database Setup
-mongoose.set('strictQuery', false);
-mongoose.connect(url);
-
-const noteSchema = new mongoose.Schema({
-  content: String,
-  important: Boolean,
-});
-
-noteSchema.set('toJSON', {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString();
-    delete returnedObject._id;
-    delete returnedObject.__v;
-  }
-})
-
-const Note = mongoose.model('Note', noteSchema);
 
 // All API Endpoints
 app.get('/', (request, response) => {
