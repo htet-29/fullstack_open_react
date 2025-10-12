@@ -26,4 +26,4 @@ noteSchema.set('toJSON', {
     }
 });
 
-module.exports = mongoose.model('Note', noteSchem);
+module.exports = mongoose.model('Note', noteSchema);

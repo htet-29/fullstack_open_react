@@ -7,7 +7,7 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "dev": "node --watch index.js Haymar@2911999",
+    "dev": "node --watch index.js",
     "start": "node index.js",
     "build:ui": "rm -rf dist && cd ../../part2 && npm run build && cp -r dist ../part3/backend",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
