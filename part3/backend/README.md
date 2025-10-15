@@ -13,3 +13,9 @@ npm install eslint @eslint/js --save-dev
 ```sh
 npx eslint --init
 ```
+
+## NODE_ENV doesn't work on Window by default so we need to install cross-env package
+
+```sh
+npm i cross-env
+```
